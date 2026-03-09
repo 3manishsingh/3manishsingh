@@ -1,0 +1,474 @@
+# def remove_duplicate(s):
+#     result = []
+#     seen = set()
+#     for char in s:
+#         if char not in seen:
+#             result.append(char)
+#             seen.add(char)
+#     return ''.join(result)
+
+# s = ["geeeeks", "hello", "wsadfasrld", "sfdiapuhy", "sfdiaaaapppaauhx","giurote", "asdfghjjjjjjjk", "asdfghjjjjjjjk", "asdfghj"]
+# longest = 0
+# pos = 0
+# newStrs = []
+# for i in range(len(s)):
+#     newStr = remove_duplicate(s[i])
+#     if len(newStr) >= longest:
+#         longest = len(newStr)
+#         pos = i
+#         newStrs.append(newStr)
+# print(newStrs)
+
+# final = []
+# for i in range(len(newStrs)):
+#     if len(newStrs[i]) == longest:
+#         final.append(newStrs[i])
+
+# print(final)
+# new = sorted(final)
+# print(new[0])
+
+# s = "ababcbacadefegdehijhklij"
+# lastIndex = {}
+# ans = 0
+# for i, c in enumerate(s):
+#     lastIndex[c] = i
+
+# print("lastIndex", lastIndex)
+
+# res = []
+# size = end = 0
+# for i, c in enumerate(s):
+#     size += 1
+#     print(c, ": size", size, "end", end, "lastIndex", lastIndex[c])
+#     end = max(end, lastIndex[c])
+
+#     if i == end:
+#         res.append(size)
+#         print(res, size)
+#         size = 0
+
+
+# Simple Chess Game in Python (Enforces Legal Moves)
+# board = [
+#     ["r", "n", "b", "q", "k", "b", "n", "r"],
+#     ["p", "p", "p", "p", "p", "p", "p", "p"],
+#     [".", ".", ".", ".", ".", ".", ".", "."],
+#     [".", ".", ".", ".", ".", ".", ".", "."],
+#     [".", ".", ".", ".", ".", ".", ".", "."],
+#     [".", ".", ".", ".", ".", ".", ".", "."],
+#     ["P", "P", "P", "P", "P", "P", "P", "P"],
+#     ["R", "N", "B", "Q", "K", "B", "N", "R"]
+# ]
+
+# def print_board():
+#     for i, row in enumerate(board, start=1):
+#         print(f"{8-i+1} {' '.join(row)}")
+#     print("  a b c d e f g h\n")
+
+# def get_position(pos):
+#     return 8 - int(pos[1]), ord(pos[0]) - ord('a')
+
+# def is_valid_move(start, end, piece):
+#     x1, y1 = start
+#     x2, y2 = end
+#     dx, dy = abs(x2 - x1), abs(y2 - y1)
+
+#     if piece.lower() == "p":  # Pawn
+#         direction = -1 if piece.isupper() else 1
+#         if y1 == y2 and board[x2][y2] == ".":  # Forward move
+#             return (dx == 1) or (dx == 2 and (x1 == 1 or x1 == 6))
+#         if dx == 1 and dy == 1 and board[x2][y2] != ".":  # Capture
+#             return True
+
+#     elif piece.lower() == "r":  # Rook
+#         if x1 == x2 or y1 == y2:  # Straight move
+#             return is_clear_path(start, end)
+    
+#     elif piece.lower() == "b":  # Bishop
+#         if dx == dy:  # Diagonal move
+#             return is_clear_path(start, end)
+    
+#     elif piece.lower() == "q":  # Queen
+#         if dx == dy or x1 == x2 or y1 == y2:  # Rook or Bishop move
+#             return is_clear_path(start, end)
+
+#     elif piece.lower() == "k":  # King
+#         return dx <= 1 and dy <= 1  # One square move
+    
+#     elif piece.lower() == "n":  # Knight (L-shape)
+#         return (dx, dy) in [(2, 1), (1, 2)]
+    
+#     return False
+
+# def is_clear_path(start, end):
+#     x1, y1 = start
+#     x2, y2 = end
+#     dx = (x2 - x1) // max(1, abs(x2 - x1))
+#     dy = (y2 - y1) // max(1, abs(y2 - y1))
+    
+#     x, y = x1 + dx, y1 + dy
+#     while (x, y) != (x2, y2):
+#         if board[x][y] != ".":
+#             return False
+#         x += dx
+#         y += dy
+#     return True
+
+# def move_piece(start, end):
+#     x1, y1 = get_position(start)
+#     x2, y2 = get_position(end)
+    
+#     piece = board[x1][y1]
+    
+#     if piece == ".":
+#         print("No piece at the starting position!")
+#         return False
+
+#     if board[x2][y2].isupper() == piece.isupper():
+#         print("Cannot capture your own piece!")
+#         return False
+
+#     if not is_valid_move((x1, y1), (x2, y2), piece):
+#         print("Invalid move for this piece!")
+#         return False
+
+#     board[x2][y2] = piece
+#     board[x1][y1] = "."
+#     return True
+
+# print_board()
+
+# while True:
+#     move = input("Enter move (e.g., e2 e4) or 'q' to quit: ")
+#     if move.lower() == "q":
+#         break
+#     try:
+#         start, end = move.split()
+#         if move_piece(start, end):
+#             print_board()
+#     except Exception:
+#         print("Invalid input format. Try again.")
+
+
+# d = {}
+# d[True] = "Yes"
+# print(d)
+# d[1] = "No"
+# print(d)
+# d[1.0] = "Maybe"
+# print(d)
+
+# num = 54321
+# nums = str(num)
+# numStr = []
+# res = []
+
+# for i in range(len(nums)):
+#     numStr.append((10 ** (len(nums) - i - 1)) * int(nums[i]))
+
+# # print(numStr)
+
+# numToWord = {
+#     50000: "Five Lakh",
+#     4000: "Four Thousand",
+#     300: "Three hundred",
+#     20: "Twenty",
+#     1: "One"}
+# for i in range(len(numStr)):
+#     res.append(numToWord[numStr[i]])
+
+# print(" ".join(res))
+
+# import pandas as pd
+# import requests
+# from bs4 import BeautifulSoup
+
+# def extract_fifa_world_cup_finals():
+#     url = "https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_finals"
+#     response = requests.get(url)
+#     soup = BeautifulSoup(response.text, "html.parser")
+    
+#     # Find the first table on the page
+#     table = soup.find("table", {"class": "wikitable"})
+#     df = pd.read_html(str(table))[0]
+    
+#     # Extract relevant columns
+#     df = df.iloc[:10, [0, 2, 3, 4]]  # Extract first 10 rows with required columns
+#     df.columns = ["Year", "Winner", "Score", "Runners-up"]
+    
+#     return df
+
+# def append_to_google_sheets(df, sheet_id, sheet_name, access_token):
+#     url = f"https://sheets.googleapis.com/v4/spreadsheets/{sheet_id}/values/{sheet_name}:append"
+#     headers = {
+#         "Authorization": f"Bearer {access_token}",
+#         "Content-Type": "application/json"
+#     }
+    
+#     values = df.values.tolist()
+#     body = {
+#         "values": values,
+#         "majorDimension": "ROWS"
+#     }
+    
+#     response = requests.post(url, headers=headers, json=body, params={"valueInputOption": "RAW"})
+#     return response.json()
+
+# if __name__ == "__main__":
+#     sheet_id = "your_google_sheet_id"
+#     sheet_name = "Sheet1"
+#     access_token = "your_access_token"
+    
+#     data = extract_fifa_world_cup_finals()
+#     response = append_to_google_sheets(data, sheet_id, sheet_name, access_token)
+#     print(response)
+
+# str = "abc"
+# i = len(str) - 1
+# print(str[i])
+
+# nums = [2,11,15,7]
+# t = 9
+# prevMap = {}
+
+# for i, n in enumerate(nums):
+#     print(i, n, "----")
+#     diff = t - n
+#     if diff in prevMap:
+#         print(diff, prevMap)
+#     prevMap[n] = i
+#     print(prevMap)
+
+# strs = ["flower","flower","flower"]
+# for i in range(len(strs[0])):
+#     for s in strs:
+#         if i == len(s) or s[i] != strs[0][i]:
+#             print(s[:i])
+#             print("---")k
+# print(strs[0])
+
+# nums = [3,2,2,3]
+# val = 3
+# k = 0
+
+# for i in range(len(nums)):
+#     if nums[i] != val:
+#         nums[k] = nums[i]
+#         k += 1
+#         print(k, nums[:k])
+
+# s =  "dog cat cat dog"
+# word = s.split(" ")
+# print(word)
+
+# s = "egg"
+# t = "add"
+
+# for c1, c2 in zip(s, t):
+    # print(c1, c2)
+
+# nums = [2,2,1,1,1,2,2]
+# count = 0
+# res = nums[0]
+
+# for num in nums:
+#     if count == 0:
+#         res = num
+#     count += (1 if num == res else -1)
+#     print(num, res, count)
+
+
+# haystack = "abcsadbutsd"
+# needle = "sad"
+# n, m = len(haystack), len(needle)
+
+# print(n - m + 1)
+
+# for i in range(n - m + 1):
+#     print("loop --->", i)
+#     j = 0
+#     while j < m:
+#         print(haystack[i + j], "at", i,"----",  needle[j], "at", j)
+#         if haystack[i + j] != needle[j]:
+#             print(haystack[i + j]," !=",  needle[j])
+#             break
+#         j += 1
+#     if j == m:
+#         print("---", i)
+# return -1
+
+# s = "A"
+# print(s.lower().isalnum())
+
+
+# s = ".a"
+# i, j = 0, len(s) - 1
+
+# while i <= j:
+#     print(i, j)
+#     while i > 0 and not s[i].isalnum():
+#         print("----------1---------")
+#         i += 1
+#     while j > 0 and not s[j].isalnum():
+#         print("----------2---------")
+#         j -= 1
+#     print(s[i], s[j])
+#     if s[i].lower() != s[j].lower():
+#         print("false")
+#     i += 1
+#     j -= 1
+# print("true")
+
+# haystack = "abcsadbutsad"
+# needle = "sad"
+
+# m, n = len(haystack), len(needle)
+
+# for i in range(m - n + 1):
+#     j = 0
+#     while j < m:
+#         print(haystack[i + j], needle[j])
+#         if haystack[i + j] != needle[j]:
+#             break
+#         j += 1
+#     if j == m:
+#         print("--------", j)
+# return -1
+# nums1 = [1,2,3,0,0,0]
+# m = 3
+# nums2 = [2,5,6]
+# n = 3
+
+# last = m + n - 1
+# i = j = n - 1
+
+# while i > 0 or j > 0:
+#     if nums1[i] >= nums2[j]:
+#         nums1[last] = nums1[i]
+#         i -= 1
+#     else:
+#         nums1[last] = nums2[j]
+#         j -= 1
+#     last -= 1
+#     print(i, j, nums1)
+
+# nums = [1,2,3,4, 5, 6, 7]
+# k = 3
+
+# l = 0
+# setNums = set()
+
+# for r in range(len(nums)):
+#     print(l, "->", nums[l],"___",  r, "->", nums[r])
+#     if r - l > k:
+        # setNums.remove(nums[l])
+        # l += 1
+    #     print("->", l, nums[l])
+    # if nums[r] in setNums:
+    #     print("true")
+    # setNums.add(nums[r])
+
+# nums = [1,3,5,6]
+# target = 5
+# l, r = 0, len(nums) - 1
+
+# while l <= r:
+#     m = l + ((r - l) // 2)
+#     if nums[m] > target:
+#         r = m - 1
+#     elif nums[m] < target:
+#         r = m + 1
+#     else:
+#         print(m)
+# print("---l", l)
+
+
+class Node:
+    def __init__(self, key):
+        self.left = self.right = None
+        self.key = key
+
+def preorder(root):
+    if root:
+        print(root.key, end=" ")
+        preorder(root.left)
+        preorder(root.right)
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.key, end=" ")
+        inorder(root.right)
+
+def postorder(root):
+    if root:
+        postorder(root.left)
+        postorder(root.right)
+        print(root.key, end=" ")
+
+#        1
+#      /  \
+#     2    3
+#    / \  / \
+#   4   5 6  7
+
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.right.left = Node(6)
+root.right.right = Node(7)
+
+print("\nPreorder: ", end="")
+preorder(root)
+print("\nInorder: ", end="")
+inorder(root)
+print("\nPostorder: ", end="")
+postorder(root)
+
+
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            print(node, end=" ")
+            visited.add(node)
+            queue.extend(graph[node])
+
+def dfs(graph, node, visited=None):
+    if visited is None:
+        visited = set()
+    if node not in visited:
+        print(node, end=" ")
+        visited.add(node)
+        for neighbor in graph[node]:
+            dfs(graph, neighbor, visited)
+
+#        A
+#      /   \
+#     B     C
+#    / \   / \
+#   D   E F   G
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F', 'G'],
+    'D': ['B'],
+    'E': ['B'],
+    'F': ['C'],
+    'G': ['C']
+}
+
+print("\nBFS Traversal:")
+bfs(graph, 'A')
+
+print("\nDFS Traversal:")
+dfs(graph, 'A')
