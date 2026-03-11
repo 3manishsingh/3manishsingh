@@ -1,0 +1,253 @@
+Available Tables
+Customers
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+2	Robert	Luna	22	USA
+3	David	Robinson	22	UK
+4	John	Reinhardt	25	UK
+5	Betty	Doe	28	UAE
+Orders
+order_id	item	amount	customer_id
+1	Keyboard	400	4
+2	Mouse	300	4
+3	Monitor	12000	3
+4	Keyboard	400	1
+5	Mousepad	250	2
+Shippings
+shipping_id	status	customer
+1	Pending	2
+2	Pending	4
+3	Delivered	3
+4	Pending	5
+5	Delivered	1
+
+SELECT 
+c.first_name,
+c.last_name,
+o.item,
+s.status
+FROM Customers c
+JOIN Shippings s
+ON c.customer_id = s.customer
+LEFT JOIN Orders o
+ON c.customer_id = o.customer_id
+WHERE s.status = 'Pending';
+
+SELECT first_name, last_name
+FROM Customers;
+
+SELECT *
+FROM Customers
+WHERE country = 'USA';
+
+SELECT *
+FROM Customers
+WHERE country = 'USA' AND age > 25;
+
+SELECT *
+FROM Customers
+ORDER BY age DESC;
+
+SELECT *
+FROM Customers
+LIMIT 3;
+
+SELECT DISTINCT country
+FROM Customers;
+
+SELECT country, COUNT(*)
+FROM Customers
+GROUP BY country;
+
+SELECT AVG(age)
+FROM Customers;
+
+SELECT country, COUNT(*)
+FROM Customers
+GROUP BY country
+HAVING COUNT(*) > 1;
+
+SELECT c.first_name, o.item
+FROM Customers c
+JOIN Orders o
+ON c.customer_id = o.customer_id;
+
+SELECT *
+FROM Customers
+WHERE age > (
+    SELECT AVG(age)
+    FROM Customers
+);
+
+SELECT *
+FROM Customers
+WHERE country IN ('USA','UK');
+
+SELECT *
+FROM Customers
+WHERE age BETWEEN 20 AND 30;
+
+SELECT *
+FROM Customers
+WHERE first_name LIKE 'J%';
+
+SELECT first_name,
+CASE
+    WHEN age >= 30 THEN 'Senior'
+    ELSE 'Young'
+END AS category
+FROM Customers;
+
+SELECT item, amount
+FROM Orders
+ORDER BY amount DESC;
+
+SELECT SUM(amount) AS total_sales
+FROM Orders;
+
+SELECT customer_id, SUM(amount) AS total_spent
+FROM Orders
+GROUP BY customer_id;
+
+SELECT customer_id, SUM(amount) AS total_spent
+FROM Orders
+GROUP BY customer_id
+HAVING SUM(amount) > 500;
+
+SELECT *
+FROM Orders
+WHERE amount > (
+    SELECT AVG(amount)
+    FROM Orders
+);
+
+SELECT
+order_id,
+item,
+amount,
+RANK() OVER (ORDER BY amount DESC) AS price_rank
+FROM Orders;
+
+SELECT
+item,
+amount,
+CASE
+WHEN amount >= 1000 THEN 'Expensive'
+WHEN amount >= 400 THEN 'Medium'
+ELSE 'Cheap'
+END AS category
+FROM Orders;
+
+
+SELECT
+c.first_name,
+SUM(o.amount) AS total_spent
+FROM Customers c
+JOIN Orders o
+ON c.customer_id = o.customer_id
+GROUP BY c.first_name
+HAVING SUM(o.amount) > 500
+ORDER BY total_spent DESC;
+
+
+Output
+first_name	last_name	item	status
+Robert	Luna	Mousepad	Pending
+John	Reinhardt	Keyboard	Pending
+John	Reinhardt	Mouse	Pending
+Betty	Doe		Pending
+first_name	last_name
+John	Doe
+Robert	Luna
+David	Robinson
+John	Reinhardt
+Betty	Doe
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+2	Robert	Luna	22	USA
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+5	Betty	Doe	28	UAE
+4	John	Reinhardt	25	UK
+2	Robert	Luna	22	USA
+3	David	Robinson	22	UK
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+2	Robert	Luna	22	USA
+3	David	Robinson	22	UK
+country
+USA
+UK
+UAE
+country	COUNT(*)
+UAE	1
+UK	2
+USA	2
+AVG(age)
+25.6
+country	COUNT(*)
+UK	2
+USA	2
+first_name	item
+John	Keyboard
+John	Mouse
+David	Monitor
+John	Keyboard
+Robert	Mousepad
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+5	Betty	Doe	28	UAE
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+2	Robert	Luna	22	USA
+3	David	Robinson	22	UK
+4	John	Reinhardt	25	UK
+customer_id	first_name	last_name	age	country
+2	Robert	Luna	22	USA
+3	David	Robinson	22	UK
+4	John	Reinhardt	25	UK
+5	Betty	Doe	28	UAE
+customer_id	first_name	last_name	age	country
+1	John	Doe	31	USA
+4	John	Reinhardt	25	UK
+first_name	category
+John	Senior
+Robert	Young
+David	Young
+John	Young
+Betty	Young
+item	amount
+Monitor	12000
+Keyboard	400
+Keyboard	400
+Mouse	300
+Mousepad	250
+total_sales
+13350
+customer_id	total_spent
+1	400
+2	250
+3	12000
+4	700
+customer_id	total_spent
+3	12000
+4	700
+order_id	item	amount	customer_id
+3	Monitor	12000	3
+order_id	item	amount	price_rank
+3	Monitor	12000	1
+1	Keyboard	400	2
+4	Keyboard	400	2
+2	Mouse	300	4
+5	Mousepad	250	5
+item	amount	category
+Keyboard	400	Medium
+Mouse	300	Cheap
+Monitor	12000	Expensive
+Keyboard	400	Medium
+Mousepad	250	Cheap
+first_name	total_spent
+David	12000
+John	1100
